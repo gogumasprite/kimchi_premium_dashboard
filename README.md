@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 김치프리미엄 대시보드 (Kimchi Premium Dashboard)
 
-## Getting Started
+실시간 암호화폐 김치프리미엄 모니터링 및 백테스팅 도구입니다. Supabase와 Next.js 14를 기반으로 구축되었습니다.
 
-First, run the development server:
+## 주요 기능
+
+1. **실시간 대시보드**:
+    - 현재 김치프리미엄, 기간 내 최고/최저 프리미엄 조회
+    - 1시간, 4시간, 1일 단위 차트 제공 (KST 기준)
+    - 요일 및 시간대별 프리미엄 강도 히트맵 (30분/60분 단위)
+2. **백테스팅 시뮬레이터**:
+    - 진입/탈출 스프레드 설정에 따른 과거 수익률 시뮬레이션
+    - 승률, 거래 횟수, 총 수익률 계산
+
+## 기술 스택 (Tech Stack)
+
+- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Database**: Supabase (PostgreSQL)
+- **State Management**: TanStack Query (React Query)
+- **Visualization**: Recharts
+- **UI Components**: Custom Components (Mental Model of shadcn/ui)
+
+## 설치 및 실행 방법
+
+### 1. 프로젝트 클론
+
+```bash
+git clone https://github.com/YOUR_USERNAME/kimchi-premium.git
+cd kimchi-premium
+```
+
+### 2. 패키지 설치
+
+```bash
+npm install
+```
+
+### 3. 환경 변수 설정
+
+프로젝트 루트에 `.env.local` 파일을 생성하고 Supabase 정보를 입력합니다.
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 4. 데이터베이스 설정 (필수)
+
+Supabase SQL Editor에서 `/supabase/rpc.sql` 파일의 내용을 실행하여 필요한 RPC 함수를 생성해야 합니다.
+
+### 5. 개발 서버 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 `http://localhost:3000`으로 접속하여 확인합니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 배포 (Vercel)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. GitHub 저장소에 코드를 푸시합니다.
+2. Vercel에서 'New Project'를 클릭하고 해당 저장소를 import 합니다.
+3. Environment Variables 설정 메뉴에서 `NEXT_PUBLIC_SUPABASE_URL`과 `NEXT_PUBLIC_SUPABASE_ANON_KEY`를 추가합니다.
+4. Deploy 버튼을 누르면 배포가 완료됩니다.
