@@ -24,10 +24,10 @@ export const api = {
         return data || [];
     },
 
-    simulateBacktest: async (entrySpread: number, exitSpread: number, periodDays: number): Promise<BacktestResult> => {
+    simulateBacktest: async (entrySpread: number, targetMargin: number, periodDays: number): Promise<BacktestResult> => {
         const { data, error } = await supabase.rpc('simulate_backtest', {
             entry_spread: entrySpread,
-            exit_spread: exitSpread,
+            target_margin: targetMargin,
             period_days: periodDays,
         });
         // RPC returns a single row in an array, so we return the first element.

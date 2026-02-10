@@ -11,8 +11,8 @@ export default function BacktestPage() {
     const [result, setResult] = useState<{ count: number; winRate: number; return: number } | null>(null);
 
     const mutation = useMutation({
-        mutationFn: ({ entry, exit, period }: { entry: number; exit: number; period: number }) =>
-            api.simulateBacktest(entry, exit, period),
+        mutationFn: ({ entry, margin, period }: { entry: number; margin: number; period: number }) =>
+            api.simulateBacktest(entry, margin, period),
         onSuccess: (data) => {
             setResult({
                 count: data.trade_count,
@@ -22,8 +22,8 @@ export default function BacktestPage() {
         },
     });
 
-    const handleRun = (entry: number, exit: number, period: number) => {
-        mutation.mutate({ entry, exit, period });
+    const handleRun = (entry: number, margin: number, period: number) => {
+        mutation.mutate({ entry, margin, period });
     };
 
     return (

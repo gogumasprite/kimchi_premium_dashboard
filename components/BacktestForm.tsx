@@ -13,12 +13,12 @@ interface BacktestFormProps {
 
 export function BacktestForm({ onRun, isLoading }: BacktestFormProps) {
     const [entry, setEntry] = useState("0");
-    const [exit, setExit] = useState("3");
+    const [margin, setMargin] = useState("0.27");
     const [period, setPeriod] = useState("7");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onRun(Number(entry), Number(exit), Number(period));
+        onRun(Number(entry), Number(margin), Number(period));
     };
 
     return (
@@ -35,13 +35,13 @@ export function BacktestForm({ onRun, isLoading }: BacktestFormProps) {
                     />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="exit">Exit Spread (%)</Label>
+                    <Label htmlFor="margin">Target Margin (%)</Label>
                     <Input
-                        id="exit"
+                        id="margin"
                         type="number"
-                        step="0.1"
-                        value={exit}
-                        onChange={(e) => setExit(e.target.value)}
+                        step="0.01"
+                        value={margin}
+                        onChange={(e) => setMargin(e.target.value)}
                     />
                 </div>
                 <div className="space-y-2">
