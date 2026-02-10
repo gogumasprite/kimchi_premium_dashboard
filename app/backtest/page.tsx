@@ -26,8 +26,8 @@ export default function BacktestPage() {
     const [summary, setSummary] = useState<BacktestSummary | null>(null);
 
     const mutation = useMutation({
-        mutationFn: ({ entry, margin, period }: { entry: number; margin: number; period: number }) =>
-            api.simulateBacktest(entry, margin, period),
+        mutationFn: ({ entry, margin, period, capital, fee }: { entry: number; margin: number; period: number; capital: number; fee: number }) =>
+            api.simulateBacktest(entry, margin, period, capital, fee),
         onSuccess: (data, variables) => {
             setTrades(data);
             // Logic: 
@@ -50,7 +50,7 @@ export default function BacktestPage() {
             let netReturnSum = 0;
 
             data.forEach(t => {
-                const spreadDiff = t.exit_spread - t.entry_spread; // e.g. 0.3%
+                const spreadDiff = t.exit_val - t.entry_val; // e.g. 0.3%
                 const netPct = spreadDiff - fee; // e.g. 0.3 - 0.24 = 0.06%
 
                 const krwProfit = tradeAmt * (netPct / 100);
@@ -142,7 +142,7 @@ export default function BacktestPage() {
                                 </thead>
                                 <tbody className="divide-y">
                                     {trades.map((t, idx) => {
-                                        const spreadDiff = t.exit_spread - t.entry_spread;
+                                        const spreadDiff = t.exit_val - t.entry_val;
                                         const netPct = spreadDiff - inputs.fee;
                                         const profitKrw = (inputs.capital * 0.5) * (netPct / 100);
 
@@ -151,11 +151,11 @@ export default function BacktestPage() {
                                                 <td className="px-4 py-3 whitespace-nowrap">
                                                     {new Date(t.entry_at).toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
                                                 </td>
-                                                <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{t.entry_spread.toFixed(2)}%</td>
+                                                <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{t.entry_val.toFixed(2)}%</td>
                                                 <td className="px-4 py-3 whitespace-nowrap">
                                                     {new Date(t.exit_at).toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
                                                 </td>
-                                                <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{t.exit_spread.toFixed(2)}%</td>
+                                                <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{t.exit_val.toFixed(2)}%</td>
                                                 <td className={cn("px-4 py-3 text-right font-medium", netPct >= 0 ? "text-red-500" : "text-blue-500")}>
                                                     {netPct >= 0 ? "+" : ""}{netPct.toFixed(2)}%
                                                 </td>

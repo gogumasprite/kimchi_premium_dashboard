@@ -24,11 +24,13 @@ export const api = {
         return data || [];
     },
 
-    simulateBacktest: async (entrySpread: number, targetMargin: number, periodDays: number): Promise<BacktestTrade[]> => {
+    simulateBacktest: async (entrySpread: number, targetMargin: number, periodDays: number, capital?: number, fee?: number): Promise<BacktestTrade[]> => {
         const { data, error } = await supabase.rpc('simulate_backtest', {
-            entry_spread: entrySpread,
-            target_margin: targetMargin,
-            period_days: periodDays,
+            p_entry_spread: entrySpread,
+            p_target_margin: targetMargin,
+            p_period_days: periodDays,
+            p_initial_capital: capital || 0,
+            p_fee_slippage: fee || 0
         });
         if (error) throw error;
         return data || [];

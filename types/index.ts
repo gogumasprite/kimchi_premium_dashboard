@@ -17,7 +17,7 @@ export interface SpreadHeatmap {
 
 export interface BacktestTrade {
     entry_at: string;
-    entry_spread: number;
+    entry_val: number;
     exit_at: string;
-    exit_spread: number;
+    exit_val: number;
 }
