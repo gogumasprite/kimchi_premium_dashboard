@@ -15,8 +15,9 @@ export interface SpreadHeatmap {
     avg_spread: number;
 }
 
-export interface BacktestResult {
-    trade_count: number;
-    win_rate: number;
-    total_return: number;
+export interface BacktestTrade {
+    entry_at: string;
+    entry_spread: number;
+    exit_at: string;
+    exit_spread: number;
 }

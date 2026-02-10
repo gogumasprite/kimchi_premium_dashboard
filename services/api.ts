@@ -1,6 +1,6 @@
 
 import { supabase } from '@/lib/supabase';
-import { MarketCandle, SpreadHeatmap, BacktestResult } from '@/types';
+import { MarketCandle, SpreadHeatmap, BacktestTrade } from '@/types';
 
 export const api = {
     getMarketCandles: async (intervalMinutes: number): Promise<MarketCandle[]> => {
@@ -24,14 +24,13 @@ export const api = {
         return data || [];
     },
 
-    simulateBacktest: async (entrySpread: number, targetMargin: number, periodDays: number): Promise<BacktestResult> => {
+    simulateBacktest: async (entrySpread: number, targetMargin: number, periodDays: number): Promise<BacktestTrade[]> => {
         const { data, error } = await supabase.rpc('simulate_backtest', {
             entry_spread: entrySpread,
             target_margin: targetMargin,
             period_days: periodDays,
         });
-        // RPC returns a single row in an array, so we return the first element.
         if (error) throw error;
-        return data?.[0] || { trade_count: 0, win_rate: 0, total_return: 0 };
+        return data || [];
     },
 };
