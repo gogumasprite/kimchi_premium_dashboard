@@ -4,10 +4,15 @@ import { MarketCandle, SpreadHeatmap, BacktestResult } from '@/types';
 
 export const api = {
     getMarketCandles: async (intervalMinutes: number): Promise<MarketCandle[]> => {
+        console.log(`Fetching candles with interval: ${intervalMinutes}m`);
         const { data, error } = await supabase.rpc('get_market_candles', {
             interval_minutes: intervalMinutes,
         });
-        if (error) throw error;
+        if (error) {
+            console.error('Error fetching candles:', error);
+            throw error;
+        }
+        console.log(`Fetched ${data?.length || 0} candles`);
         return data || [];
     },
 

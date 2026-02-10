@@ -11,17 +11,19 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export default function Dashboard() {
-  const [interval, setInterval] = useState(60); // Default 1 hour
+  const [interval, setInterval] = useState(1); // Default 1 minute for debugging
   const [heatmapSegment, setHeatmapSegment] = useState(60); // Default 60 mins
 
   const { data: candles } = useQuery({
     queryKey: ["candles", interval],
     queryFn: () => api.getMarketCandles(interval),
+    refetchInterval: 10000, // Poll every 10 seconds
   });
 
   const { data: heatmap } = useQuery({
     queryKey: ["heatmap", heatmapSegment],
     queryFn: () => api.getSpreadHeatmap(heatmapSegment),
+    refetchInterval: 10000, // Poll every 10 seconds
   });
 
   const currentSpread = candles?.[0]?.close ?? 0;
@@ -68,6 +70,7 @@ export default function Dashboard() {
           {/* Button Group */}
           <div className="flex bg-muted p-1 rounded-lg">
             {[
+              { label: '1m', value: 1 },
               { label: '1H', value: 60 },
               { label: '4H', value: 240 },
               { label: '1D', value: 1440 }
