@@ -75,7 +75,7 @@ export default function BacktestPage() {
 
     const handleRun = (entry: number, margin: number, period: number, capital: number, fee: number) => {
         setInputs({ capital, fee });
-        mutation.mutate({ entry, margin, period });
+        mutation.mutate({ entry, margin, period, capital, fee });
     };
 
     return (
